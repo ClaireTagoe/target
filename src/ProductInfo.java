@@ -35,6 +35,7 @@ public class ProductInfo{
 		product2.add("bike");
 		ha.add(product1);
 		http.writeToFile(ha);
+		http.readFromFile("../bin/logfile.txt");
 
 
 	}
@@ -91,20 +92,35 @@ public class ProductInfo{
 public void writeToFile(ArrayList<ArrayList<String>> products) {
 	String line_to_write = "";
 	Path p = Paths.get("../bin/logfile.txt");
-	try (OutputStream out = new BufferedOutputStream(
-		Files.newOutputStream(p, CREATE, APPEND))) {
-			for (ArrayList<String> product_detail: products) {
-				line_to_write += (product_detail.get(0) + " ");
-				line_to_write += (product_detail.get(1) + " ");
-				line_to_write += (product_detail.get(2) + " ");
-				line_to_write += (product_detail.get(2) + " ");
-				byte data[] = line_to_write.getBytes();
-				out.write(data, 0, data.length);
-			  }
-	} catch (IOException x) {
-		System.err.println(x);
-	}
+		try (OutputStream out = new BufferedOutputStream(
+			Files.newOutputStream(p, CREATE, APPEND))) {
+				for (ArrayList<String> product_detail: products) {
+					line_to_write += (product_detail.get(0) + " ");
+					line_to_write += (product_detail.get(1) + " ");
+					line_to_write += (product_detail.get(2) + " ");
+					line_to_write += (product_detail.get(2) + " ");
+					byte data[] = line_to_write.getBytes();
+					out.write(data, 0, data.length);
+			  	}
+				} catch (IOException x) {
+					System.err.println(x);
+				}
+		}
 
+	public void readFromFile(String filepath) {
+		Path file = Paths.get(filepath);
+try (InputStream in = Files.newInputStream(file);
+    BufferedReader reader =
+      new BufferedReader(new InputStreamReader(in))) {
+    String line = null;
+    while ((line = reader.readLine()) != null) {
+				for (String ha: line.split(" ")) {
+					System.out.println(ha);
+				}
+    }
+} catch (IOException x) {
+    System.err.println(x);
+}
 	}
 
 }
