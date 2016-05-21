@@ -5,7 +5,7 @@ import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import org.json.*;
+
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -17,14 +17,16 @@ public class ProductInfo{
 
 		ProductInfo http = new ProductInfo();
 
-		http.fetchDetails();
+		System.out.println(http.calculate_discount("30", "40"));
+
+		http.fetchDetails("17215525");
 
 	}
 
 	// HTTP GET request
-	private void fetchDetails() throws Exception {
+	private void fetchDetails(String productID) throws Exception {
 
-    String url = "http://api.target.com/products/v3/17225269?id_type=tcin&fields=pricing&key=Id8SS1KAXuFd2W7R60XC5AUTTGKbnU2U";
+    //String url = "http://api.target.com/products/v3/17225269?id_type=tcin&fields=pricing&key=Id8SS1KAXuFd2W7R60XC5AUTTGKbnU2U";
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
@@ -53,8 +55,16 @@ public class ProductInfo{
 	}
 
 
-	public void fileOpen() {
+	public Integer calculate_discount(String display_price, String list_price) {
+/* Takes in a list_price and display_price and returns the discout */
+    float display = Float.valueOf(display_price.trim()).floatValue();
+		float list = Float.valueOf(list_price.trim()).floatValue();
+    System.out.println("float display_price = " + display);
+		System.out.println("float list_price = " + list);
 
-	}
+		if (display == list) return 0;
+		Integer discount = (int)((list - display)/list * 100);
+		return discount;
+}
 
 }
