@@ -119,15 +119,16 @@ public class TargetProjGUI extends JFrame {
 	 */
 	public void refresh(String url){
 		productListArea.remove(productList);
+		
+		// Retrieves ID
+		String productID = getProductID(url);
 
-		products.add(url);
+		products.add(productID);
 		productList = new JList(products.toArray());
 		productList.setPreferredSize(new Dimension(200,100));
 		productListArea.add(productList);
 		this.setVisible(true);
 		
-		// Retrieves ID
-		String productID = getProductID(url);
 		
 		// Here, use API to get json (pricings) and see if item(s) is on sale
 	}
