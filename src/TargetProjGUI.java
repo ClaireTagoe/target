@@ -49,7 +49,7 @@ public class TargetProjGUI extends JFrame {
 	private JLabel hello = new JLabel("Welcome to Sale Sniper!");
 	private JLabel catchyPhrase = new JLabel("Let us help you target the right sale products!");
 	private JLabel urlLabel = new JLabel("Enter Product URL: ");
-	private JButton addButton = new JButton("Add");
+	private JButton addButton = new JButton("Snipe!");
 	static JTextArea urlLink = new JTextArea(1,20);
 	static JList productList;
 	private JLabel logo = new JLabel();
