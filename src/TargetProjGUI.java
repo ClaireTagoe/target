@@ -148,6 +148,7 @@ public class TargetProjGUI extends JFrame {
 	 */
 	public void refresh(String url) throws Exception{
 		productListArea.remove(productList);
+		productListArea.remove(bg);
 		
 		// Retrieves ID
 		String productID = getProductID(url);
