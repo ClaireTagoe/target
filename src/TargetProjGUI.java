@@ -21,6 +21,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.ListModel;
+import javax.swing.OverlayLayout;
 import javax.swing.border.Border;
 
 /**
@@ -38,17 +39,19 @@ public class TargetProjGUI extends JFrame {
 	}
 
 	private final int FRAME_HEIGHT = 400;
-	private final int FRAME_WIDTH = 600;
+	private final int FRAME_WIDTH = 700;
 	private ArrayList<String> products = new ArrayList<String>();
 	private JPanel userData = new JPanel();
 	private JPanel productListArea = new JPanel();
 	private JPanel header = new JPanel();
-	private JLabel hello = new JLabel("Welcome to your Target List!");
+	private JLabel hello = new JLabel("Welcome to Sale Sniper!");
+	private JLabel catchyPhrase = new JLabel("Let us help you target the right sale products!");
 	private JLabel urlLabel = new JLabel("Enter Product URL: ");
 	private JButton addButton = new JButton("Add");
 	static JTextArea urlLink = new JTextArea(1,20);
 	static JList productList;
 	private JLabel logo = new JLabel();
+	private JLabel bg = new JLabel();
 
 	/**
 	 * Constructor.
@@ -87,8 +90,14 @@ public class TargetProjGUI extends JFrame {
 	public void create(){
 
 		ImageIcon image = new ImageIcon(new ImageIcon("logo.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
+		ImageIcon store = new ImageIcon(new ImageIcon("store.jpg").getImage().getScaledInstance(400, 150, Image.SCALE_DEFAULT));
+
 		//userData components
-		//header.setLayout(new GridLayout(2,1));
+		header.setLayout(new GridLayout(3,1));
+		logo.setHorizontalAlignment(JLabel.CENTER);
+		hello.setHorizontalAlignment(JLabel.CENTER);
+		catchyPhrase.setFont(new Font("Arial", Font.ITALIC, 12));
+		catchyPhrase.setHorizontalAlignment(JLabel.CENTER);
 		userData.setLayout(new GridLayout(4, 1));
 		//hello.setPreferredSize(new Dimension(20,10));
 		//urlLink.setSize(30, 10);
@@ -104,15 +113,16 @@ public class TargetProjGUI extends JFrame {
 		header.add(logo);
 		hello.setFont(new Font("Arial", Font.BOLD, 18));
 		header.add(hello);
-
+		header.add(catchyPhrase);
+		bg.setIcon(store);
 
 		//making it pretty
 //		userData.setPreferredSize(new Dimension(100,100));
-		
-		productListArea.setPreferredSize(new Dimension(100, 300));
+		//productListArea.setLayout(new OverlayLayout(productListArea));
+		productListArea.setPreferredSize(new Dimension(100, 400));
 //		header.setPreferredSize(new Dimension(100, 100));
 		userData.setBackground(Color.gray);
-		productListArea.setBackground(Color.RED);
+		//productListArea.setBackground(Color.RED);
 
 
 		//UPDATE populate productList
@@ -122,7 +132,8 @@ public class TargetProjGUI extends JFrame {
 		productList = new JList(products.toArray());
 		productList.setPreferredSize(new Dimension(200,250));
 		productListArea.add(productList);
-		
+		productListArea.add(bg);
+
 
 		//add components to frame
 		this.add(productListArea, BorderLayout.SOUTH);
@@ -137,6 +148,7 @@ public class TargetProjGUI extends JFrame {
 	 */
 	public void refresh(String url) throws Exception{
 		productListArea.remove(productList);
+		productListArea.remove(bg);
 		
 		// Retrieves ID
 		String productID = getProductID(url);
