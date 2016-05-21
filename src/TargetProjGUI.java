@@ -1,7 +1,10 @@
+package src;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -10,6 +13,7 @@ import java.util.regex.Matcher;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,6 +21,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.ListModel;
+import javax.swing.border.Border;
 
 /**
  * Java Application for Target Hackathon
@@ -37,12 +42,13 @@ public class TargetProjGUI extends JFrame {
 	private ArrayList<String> products = new ArrayList<String>();
 	private JPanel userData = new JPanel();
 	private JPanel productListArea = new JPanel();
-	private JPanel footer = new JPanel();
-	private JLabel hello = new JLabel("Hello and welcome to your Target List!");
+	private JPanel header = new JPanel();
+	private JLabel hello = new JLabel("Welcome to your Target List!");
 	private JLabel urlLabel = new JLabel("Enter Product URL: ");
 	private JButton addButton = new JButton("Add");
 	static JTextArea urlLink = new JTextArea(1,20);
 	static JList productList;
+	private JLabel logo = new JLabel();
 
 	/**
 	 * Constructor.
@@ -80,25 +86,33 @@ public class TargetProjGUI extends JFrame {
 	 */
 	public void create(){
 
+		ImageIcon image = new ImageIcon(new ImageIcon("logo.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
 		//userData components
+		//header.setLayout(new GridLayout(2,1));
 		userData.setLayout(new GridLayout(4, 1));
-		hello.setPreferredSize(new Dimension(20,10));
-		urlLink.setSize(30, 10);
+		//hello.setPreferredSize(new Dimension(20,10));
+		//urlLink.setSize(30, 10);
 		ButtonListener bl = new ButtonListener();
 		addButton.addActionListener(bl);
-		addButton.setSize(10, 50);
+		//addButton.setSize(10, 50);
 		userData.add(hello);
+		urlLabel.setFont(new Font("Arial", Font.PLAIN, 14));
 		userData.add(urlLabel);
 		userData.add(urlLink);
 		userData.add(addButton);	
+		logo.setIcon(image);
+		header.add(logo);
+		hello.setFont(new Font("Arial", Font.BOLD, 18));
+		header.add(hello);
 
 
 		//making it pretty
-		userData.setPreferredSize(new Dimension(100,100));
-		productListArea.setPreferredSize(new Dimension(100, 200));
-		footer.setPreferredSize(new Dimension(100, 100));
+//		userData.setPreferredSize(new Dimension(100,100));
+		
+		productListArea.setPreferredSize(new Dimension(100, 300));
+//		header.setPreferredSize(new Dimension(100, 100));
 		userData.setBackground(Color.gray);
-		productListArea.setBackground(Color.DARK_GRAY);
+		productListArea.setBackground(Color.RED);
 
 
 		//UPDATE populate productList
@@ -106,14 +120,14 @@ public class TargetProjGUI extends JFrame {
 
 		//JList component populating and adding to productList
 		productList = new JList(products.toArray());
-		productList.setPreferredSize(new Dimension(200,100));
+		productList.setPreferredSize(new Dimension(200,250));
 		productListArea.add(productList);
 		
 
 		//add components to frame
-		this.add(productListArea, BorderLayout.CENTER);
-		this.add(userData, BorderLayout.NORTH);
-		this.add(footer, BorderLayout.SOUTH);
+		this.add(productListArea, BorderLayout.SOUTH);
+		this.add(userData, BorderLayout.CENTER);
+		this.add(header, BorderLayout.NORTH);
 
 		this.setVisible(true);
 	}
@@ -129,7 +143,7 @@ public class TargetProjGUI extends JFrame {
 
 		products.add(productID);
 		productList = new JList(products.toArray());
-		productList.setPreferredSize(new Dimension(200,100));
+		productList.setPreferredSize(new Dimension(200,250));
 		productListArea.add(productList);
 		this.setVisible(true);
 		
