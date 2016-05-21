@@ -5,7 +5,7 @@ import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import org.json.*;
+//import org.json.*;	// Tiff does not have this
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -17,14 +17,17 @@ public class ProductInfo{
 
 		ProductInfo http = new ProductInfo();
 
-		http.fetchDetails();
+		String productID = "17225269"; // Sample ID
+		http.fetchDetails(productID);
 
 	}
 
 	// HTTP GET request
-	private void fetchDetails() throws Exception {
+	// Input: product id
+	// Output: json of the product in String form
+	public String fetchDetails(String productID) throws Exception {
 
-    String url = "http://api.target.com/products/v3/17225269?id_type=tcin&fields=pricing&key=Id8SS1KAXuFd2W7R60XC5AUTTGKbnU2U";
+		String url = "http://api.target.com/products/v3/" + productID + "?id_type=tcin&fields=pricing&key=Id8SS1KAXuFd2W7R60XC5AUTTGKbnU2U";
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
@@ -49,7 +52,8 @@ public class ProductInfo{
 		in.close();
 		System.out.println(response.toString());
 
-
+		
+		return response.toString();
 	}
 
 
