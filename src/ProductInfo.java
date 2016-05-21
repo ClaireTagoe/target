@@ -5,7 +5,10 @@ import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
+import java.io.*;
+import java.util.*;
+import static java.nio.file.StandardOpenOption.*;
+import java.nio.file.*;
 
 
 import javax.net.ssl.HttpsURLConnection;
@@ -22,6 +25,16 @@ public class ProductInfo{
 
 		String productID = "17225269"; // Sample ID
 		http.fetchDetails(productID);
+		ArrayList<ArrayList<String>> ha = new ArrayList<ArrayList<String>>();
+		ArrayList<String> product1 = new ArrayList<String>();
+		product1.add("shoe");
+		product1.add("1852531");
+		product1.add("19.99");
+		product1.add("15.99");
+		ArrayList<String> product2 = new ArrayList<String>();
+		product2.add("bike");
+		ha.add(product1);
+		http.writeToFile(ha);
 
 
 	}
@@ -75,5 +88,23 @@ public class ProductInfo{
 		Integer discount = (int)((list - display)/list * 100);
 		return discount;
 }
+public void writeToFile(ArrayList<ArrayList<String>> products) {
+	String line_to_write = "";
+	Path p = Paths.get("../bin/logfile.txt");
+	try (OutputStream out = new BufferedOutputStream(
+		Files.newOutputStream(p, CREATE, APPEND))) {
+			for (ArrayList<String> product_detail: products) {
+				line_to_write += (product_detail.get(0) + " ");
+				line_to_write += (product_detail.get(1) + " ");
+				line_to_write += (product_detail.get(2) + " ");
+				line_to_write += (product_detail.get(2) + " ");
+				byte data[] = line_to_write.getBytes();
+				out.write(data, 0, data.length);
+			  }
+	} catch (IOException x) {
+		System.err.println(x);
+	}
+
+	}
 
 }
