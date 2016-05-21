@@ -46,7 +46,7 @@ public class ProductInfo{
 
 	// Input: product id
 	// Output: json of the product in String form
-	public String fetchDetails(String productID) throws Exception {
+	public ArrayList<String> fetchDetails(String productID) throws Exception {
 
 		String url = "http://api.target.com/products/v3/" + productID + "?id_type=tcin&fields=pricing&key=Id8SS1KAXuFd2W7R60XC5AUTTGKbnU2U";
 		URL obj = new URL(url);
@@ -71,10 +71,32 @@ public class ProductInfo{
 			response.append(inputLine);
 		}
 		in.close();
-		System.out.println(response.toString());
 
-
-		return response.toString();
+		String str1 = response.toString();
+        int index1 = str1.indexOf("display_price");
+        int index2 = str1.indexOf("list_price");
+        int index3 = str1.indexOf("general_description");
+        index1+=16;
+        index2+=13;
+        index3+=22;
+        int index_1 = str1.indexOf('"', index1);
+        int index_2 = str1.indexOf('"', index2);
+        int index_3 = str1.indexOf('"', index3);
+        if(str1.charAt(index_3-1)=='\\')
+        {
+            index3=index_3+2;
+            index_3 = str1.indexOf('"', index3);
+        }
+        String display_price = str1.substring(index1, index_1);
+        String list_price = str1.substring(index2, index_2);
+        String product_name = str1.substring(index3, index_3);
+        ArrayList<String> product = new ArrayList<String>();
+        product.add(display_price);
+        product.add(list_price);
+        product.add(product_name);
+        product.add(productID);
+        System.out.println(product);
+        return product;
 	}
 
 

@@ -1,4 +1,4 @@
-package src;
+//package src;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -36,6 +36,8 @@ public class TargetProjGUI extends JFrame {
 		TargetProjGUI frame = new TargetProjGUI();
 		//frame.setLayout(new BorderLayout());
 		frame.setVisible(true);
+		
+		
 	}
 
 	private final int FRAME_HEIGHT = 400;
@@ -52,6 +54,7 @@ public class TargetProjGUI extends JFrame {
 	static JList productList;
 	private JLabel logo = new JLabel();
 	private JLabel bg = new JLabel();
+	private ArrayList<ArrayList<String>> productsToStore = new ArrayList<ArrayList<String>>();
 
 	/**
 	 * Constructor.
@@ -130,7 +133,7 @@ public class TargetProjGUI extends JFrame {
 
 		//JList component populating and adding to productList
 		productList = new JList(products.toArray());
-		productList.setPreferredSize(new Dimension(200,250));
+		productList.setPreferredSize(new Dimension(350,250));
 		productListArea.add(productList);
 		productListArea.add(bg);
 
@@ -152,16 +155,23 @@ public class TargetProjGUI extends JFrame {
 		
 		// Retrieves ID
 		String productID = getProductID(url);
-
-		products.add(productID);
-		productList = new JList(products.toArray());
-		productList.setPreferredSize(new Dimension(200,250));
-		productListArea.add(productList);
-		this.setVisible(true);
 		
 		// Use API to get prices and determine if item is on sale
 		ProductInfo info = new ProductInfo();
-		String theJSON = info.fetchDetails(productID);
+		
+		// Add item information to store
+		ArrayList<String> item = info.fetchDetails(productID);
+		
+		productsToStore.add(item);
+		
+		
+		products.add(item.get(2) + " " + item.get(1) + " --> " + item.get(0) + " Discount: " + info.calculate_discount(item.get(0), item.get(1)) + "%");
+			
+		
+		productList = new JList(products.toArray());
+		productList.setPreferredSize(new Dimension(350,250));
+		productListArea.add(productList);
+		this.setVisible(true);
 	}
 	
 	/*
