@@ -1,10 +1,13 @@
 import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -61,6 +64,7 @@ public class TargetProjGUI extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 			//UPDATE
 			refresh(urlLink.getText());
 		}
@@ -121,5 +125,20 @@ public class TargetProjGUI extends JFrame {
 		productList.setPreferredSize(new Dimension(200,100));
 		productListArea.add(productList);
 		this.setVisible(true);
+		
+		// Retrieves ID
+		String productID = getProductID(url);
+		
+		// Here, use API to get json (pricings) and see if item(s) is on sale
+	}
+	
+	/*
+	 * Retrieves 8-digit product id from the URL
+	 * Assumes that a valid Target URL is given
+	 */
+	private String getProductID(String url) {
+		Matcher m = Pattern.compile("(?<!\\d)\\d{8}(?!\\d)").matcher(url);
+		m.find();
+		return m.group();
 	}
 }
