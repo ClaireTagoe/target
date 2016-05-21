@@ -7,6 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 
+
 import javax.net.ssl.HttpsURLConnection;
 
 public class ProductInfo{
@@ -17,16 +18,23 @@ public class ProductInfo{
 
 		ProductInfo http = new ProductInfo();
 
-		System.out.println(http.calculate_discount("30", "40"));
 
-		http.fetchDetails("17215525");
+
+		String productID = "17225269"; // Sample ID
+		http.fetchDetails(productID);
+
 
 	}
 
 	// HTTP GET request
-	private void fetchDetails(String productID) throws Exception {
 
     //String url = "http://api.target.com/products/v3/17225269?id_type=tcin&fields=pricing&key=Id8SS1KAXuFd2W7R60XC5AUTTGKbnU2U";
+
+	// Input: product id
+	// Output: json of the product in String form
+	public String fetchDetails(String productID) throws Exception {
+
+		String url = "http://api.target.com/products/v3/" + productID + "?id_type=tcin&fields=pricing&key=Id8SS1KAXuFd2W7R60XC5AUTTGKbnU2U";
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
@@ -52,6 +60,7 @@ public class ProductInfo{
 		System.out.println(response.toString());
 
 
+		return response.toString();
 	}
 
 

@@ -1,5 +1,4 @@
 import java.awt.BorderLayout;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -65,8 +64,13 @@ public class TargetProjGUI extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			
-			//UPDATE
-			refresh(urlLink.getText());
+			// UPDATE - try/catch needed for HTTPGetRequest and API
+			try {
+				refresh(urlLink.getText());
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 
 	}
@@ -117,19 +121,21 @@ public class TargetProjGUI extends JFrame {
 	/*
 	 * Refreshes the product list, called every time a new product is added
 	 */
-	public void refresh(String url){
+	public void refresh(String url) throws Exception{
 		productListArea.remove(productList);
+		
+		// Retrieves ID
+		String productID = getProductID(url);
 
-		products.add(url);
+		products.add(productID);
 		productList = new JList(products.toArray());
 		productList.setPreferredSize(new Dimension(200,100));
 		productListArea.add(productList);
 		this.setVisible(true);
 		
-		// Retrieves ID
-		String productID = getProductID(url);
-		
-		// Here, use API to get json (pricings) and see if item(s) is on sale
+		// Use API to get prices and determine if item is on sale
+		ProductInfo info = new ProductInfo();
+		String theJSON = info.fetchDetails(productID);
 	}
 	
 	/*
@@ -141,4 +147,6 @@ public class TargetProjGUI extends JFrame {
 		m.find();
 		return m.group();
 	}
+	
+	
 }
