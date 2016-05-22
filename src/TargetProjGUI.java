@@ -48,7 +48,7 @@ public class TargetProjGUI extends JFrame {
 	private JPanel header = new JPanel();
 	private JLabel hello = new JLabel("Welcome to Sale Sniper!");
 	private JLabel catchyPhrase = new JLabel("Let us help you target the right sale products!");
-	private JLabel urlLabel = new JLabel("Enter Product URL: ");
+	private JLabel urlLabel = new JLabel("Enter Product URL below: ");
 	private JButton addButton = new JButton("Snipe!");
 	static JTextArea urlLink = new JTextArea(1,20);
 	static JList productList;
@@ -63,7 +63,7 @@ public class TargetProjGUI extends JFrame {
 
 		this.setSize(FRAME_HEIGHT,FRAME_WIDTH);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setTitle("My Target List");
+		this.setTitle("Sale Sniper");
 
 		create();
 
@@ -76,7 +76,7 @@ public class TargetProjGUI extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			
-			// UPDATE - try/catch needed for HTTPGetRequest and API
+			// SNIPE - try/catch needed for HTTPGetRequest and API
 			try {
 				refresh(urlLink.getText());
 			} catch (Exception e1) {
@@ -126,7 +126,7 @@ public class TargetProjGUI extends JFrame {
 		//productListArea.setLayout(new OverlayLayout(productListArea));
 		productListArea.setPreferredSize(new Dimension(100, 400));
 //		header.setPreferredSize(new Dimension(100, 100));
-		userData.setBackground(Color.gray);
+		userData.setBackground(Color.gray.brighter());
 		//productListArea.setBackground(Color.RED);
 
 
@@ -135,7 +135,7 @@ public class TargetProjGUI extends JFrame {
 
 		//JList component populating and adding to productList
 		productList = new JList(products.toArray());
-		productList.setPreferredSize(new Dimension(350,250));
+		productList.setPreferredSize(new Dimension(370,250));
 		productListArea.add(productList);
 		productListArea.add(bg);
 
@@ -167,11 +167,11 @@ public class TargetProjGUI extends JFrame {
 		productsToStore.add(item);
 		
 		
-		products.add(item.get(2) + " " + item.get(1) + " --> " + item.get(0) + " Discount: " + info.calculate_discount(item.get(0), item.get(1)) + "%");
+		products.add(item.get(2) + " " + item.get(1) + " --> " + item.get(0) + "  Discount: " + info.calculate_discount(item.get(0), item.get(1)) + "%");
 			
 		
 		productList = new JList(products.toArray());
-		productList.setPreferredSize(new Dimension(350,250));
+		productList.setPreferredSize(new Dimension(370,250));
 		productListArea.add(productList);
 		this.setVisible(true);
 	}
